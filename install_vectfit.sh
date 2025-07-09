@@ -239,7 +239,9 @@ if [ ! -f "/usr/local/include/openmc/xsdata.h" ]; then
     cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
     make -j 30
     make install
-    cd ../..
+    cd ..
+    pip install .
+    cd ..
     echo "openmc installed successfully."
     rm -rf openmc
 else
