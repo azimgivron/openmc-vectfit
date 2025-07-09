@@ -234,7 +234,7 @@ if [ ! -f "/usr/local/include/openmc/xsdata.h" ]; then
     fi
     echo "=== Building and installing openmc ==="
     cd openmc
-    git checkout v0.12.0
+    git checkout v0.12.1
     mkdir build && cd build
     cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
     make -j 30
