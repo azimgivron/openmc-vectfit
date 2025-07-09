@@ -14,7 +14,8 @@ apt install -y \
     liblapack-dev \
     libclblast-dev \
     wget \
-    libhdf5-dev 
+    libhdf5-dev \
+    gfortran
 
 echo "=== Creating and activating Python virtual environment ==="
 if [ ! -d ".venv" ]; then
@@ -28,7 +29,7 @@ echo "=== Upgrading pip ==="
 pip install --upgrade pip
 
 # === OpenSSL ===
-if [ ! -f "/usr/local/openssl-1.1.1h/lib/libssl.a" ]; then
+if [ ! -d "/usr/local/openssl-1.1.1h" ]; then
     if [ ! -d "openssl" ]; then
         echo "Cloning OpenSSL..."
         git clone https://github.com/openssl/openssl.git
@@ -91,7 +92,7 @@ else
 fi
 
 # === xtl ===
-if [ ! -f "/usr/local/include/xtl/xtl_config.hpp" ]; then
+if [ ! -d "/usr/local/include/xtl" ]; then
     if [ ! -d "xtl" ]; then
         echo "Cloning xtl..."
         git clone https://github.com/xtensor-stack/xtl.git
@@ -114,7 +115,7 @@ fi
 
 
 # === xtensor ===
-if [ ! -f "/usr/local/include/xtensor/xarray.hpp" ]; then
+if [ ! -d "/usr/local/include/xtensor" ]; then
     if [ ! -d "xtensor" ]; then
         echo "Cloning xtensor..."
         git clone https://github.com/xtensor-stack/xtensor.git
@@ -140,7 +141,7 @@ echo "=== Ensuring numpy is installed in virtual environment ==="
 pip show numpy >/dev/null 2>&1 || pip install numpy
 
 # === pybind11 ===
-if [ ! -f "/usr/local/include/pybind11/pybind11.h" ]; then
+if [ ! -d "/usr/local/include/pybind11" ]; then
     if [ ! -d "pybind11" ]; then
         echo "Cloning pybind11..."
         git clone https://github.com/pybind/pybind11.git
@@ -167,7 +168,7 @@ else
 fi
 
 # === xtensor-python ===
-if [ ! -f "/usr/local/include/xtensor-python/pyarray.hpp" ]; then
+if [ ! -d "/usr/local/include/xtensor-python" ]; then
     if [ ! -d "xtensor-python" ]; then
         echo "Cloning xtensor-python..."
         git clone https://github.com/xtensor-stack/xtensor-python.git
@@ -190,7 +191,7 @@ else
     echo "xtensor-python already installed — skipping build."
 fi
 
-if [ ! -f "/usr/local/include/xtensor-blas/xblas.hpp" ]; then
+if [ ! -d "/usr/local/include/xtensor-blas" ]; then
     if [ ! -d "xtensor-blas" ]; then
         echo "Cloning xtensor-blas..."
         git clone https://github.com/xtensor-stack/xtensor-blas
@@ -225,7 +226,7 @@ python setup.py install
 cd ..
 rm -rf vectfit
 
-if [ ! -f "/usr/local/include/openmc/xsdata.h" ]; then
+if [ ! -d "/usr/local/include/openmc" ]; then
     if [ ! -d "openmc" ]; then
         echo "Cloning openmc..."
         git clone --recurse-submodules https://github.com/openmc-dev/openmc.git
@@ -246,4 +247,25 @@ if [ ! -f "/usr/local/include/openmc/xsdata.h" ]; then
     rm -rf openmc
 else
     echo "openmc already installed — skipping build."
+fi
+
+if [ ! -d "/usr/local/include/NJOY2016" ]; then
+    if [ ! -d "NJOY2016" ]; then
+        echo "Cloning openmc..."
+        git clone --recurse-submodules https://github.com/njoy/NJOY2016.git
+    else
+        echo "njoy repo already exists — skipping clone."
+    fi
+    echo "=== Building and installing njoy ==="
+    cd NJOY2016
+    git checkout 2016.60
+    mkdir build && cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+    make -j 30
+    make install
+    cd ../..
+    echo "njoy installed successfully."
+    rm -rf njoy
+else
+    echo "njoy already installed — skipping build."
 fi
