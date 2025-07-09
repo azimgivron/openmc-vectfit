@@ -249,10 +249,10 @@ else
     echo "openmc already installed — skipping build."
 fi
 
-if [ ! -d "/usr/local/include/NJOY2016" ]; then
+if [ ! -f "/usr/local/bin/njoy" ]; then
     if [ ! -d "NJOY2016" ]; then
-        echo "Cloning openmc..."
-        git clone --recurse-submodules https://github.com/njoy/NJOY2016.git
+        echo "Cloning njoy..."
+        git clone https://github.com/njoy/NJOY2016.git
     else
         echo "njoy repo already exists — skipping clone."
     fi
@@ -265,7 +265,7 @@ if [ ! -d "/usr/local/include/NJOY2016" ]; then
     make install
     cd ../..
     echo "njoy installed successfully."
-    rm -rf njoy
+    rm -rf NJOY2016
 else
     echo "njoy already installed — skipping build."
 fi
