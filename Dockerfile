@@ -2,8 +2,7 @@
 ###############################################################################
 # Build-and-run stage (single stage)
 ###############################################################################
-ARG TARGETPLATFORM                # set automatically by BuildKit, e.g. linux/amd64
-FROM --platform=$TARGETPLATFORM python:3.9-bookworm
+FROM python:3.9-bookworm
 
 # Non-interactive, reproducible environment
 ENV LANG=C.UTF-8 \
