@@ -51,25 +51,6 @@ fi
 
 echo "=== Updating environment variables for OpenSSL ==="
 
-OPENSSL_LIB_PATH="/usr/local/openssl-1.1.1h/lib"
-OPENSSL_BIN_PATH="/usr/local/openssl-1.1.1h/bin"
-
-# Add to LD_LIBRARY_PATH if not already present
-if [[ ":$LD_LIBRARY_PATH:" != *":$OPENSSL_LIB_PATH:"* ]]; then
-    export LD_LIBRARY_PATH="$OPENSSL_LIB_PATH:$LD_LIBRARY_PATH"
-    echo "LD_LIBRARY_PATH updated."
-else
-    echo "LD_LIBRARY_PATH already contains OpenSSL path — skipping."
-fi
-
-# Add to PATH if not already present
-if [[ ":$PATH:" != *":$OPENSSL_BIN_PATH:"* ]]; then
-    export PATH="$OPENSSL_BIN_PATH:$PATH"
-    echo "PATH updated."
-else
-    echo "PATH already contains OpenSSL path — skipping."
-fi
-
 # === CMake ===
 if ! cmake --version | grep -q "3.18.4"; then
     if [ ! -d "CMake" ]; then
@@ -249,9 +230,7 @@ else
     echo "openmc already installed — skipping build."
 fi
 
-NJOY_PATH="/njoy"
-
-if [ ! -d "/njoy" ]; then
+if [ ! -d $NJOY_PATH ]; then
     if [ ! -d "NJOY2016" ]; then
         echo "Cloning njoy..."
         git clone https://github.com/njoy/NJOY2016.git
