@@ -138,7 +138,7 @@ fi
 
 # === numpy ===
 echo "=== Ensuring numpy is installed in virtual environment ==="
-pip show numpy >/dev/null 2>&1 || pip install numpy
+pip show numpy >/dev/null 2>&1 || pip install numpy~=1.9
 
 # === pybind11 ===
 if [ ! -d "/usr/local/include/pybind11" ]; then
