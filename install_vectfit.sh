@@ -248,11 +248,3 @@ if [ ! -d $NJOY_PATH ]; then
 else
     echo "njoy already installed — skipping build."
 fi
-
-# Add to PATH if not already present
-if [[ ":$PATH:" != *":$NJOY_PATH:"* ]]; then
-    export PATH="$NJOY_PATH:$PATH"
-    echo "PATH updated."
-else
-    echo "PATH already contains njoy path — skipping."
-fi
