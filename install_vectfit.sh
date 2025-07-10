@@ -249,6 +249,8 @@ else
     echo "openmc already installed — skipping build."
 fi
 
+NJOY_PATH="/njoy"
+
 if [ ! -d "/njoy" ]; then
     if [ ! -d "NJOY2016" ]; then
         echo "Cloning njoy..."
@@ -259,11 +261,19 @@ if [ ! -d "/njoy" ]; then
     echo "=== Building and installing njoy ==="
     cd NJOY2016
     git checkout 2016.60
-    cmake -B /njoy -S .
-    cmake --build /njoy -j 30
+    cmake -B $NJOY_PATH
+    cmake --build $NJOY_PATH -j 30
     cd ..
     echo "njoy installed successfully."
     rm -rf NJOY2016
 else
     echo "njoy already installed — skipping build."
+fi
+
+# Add to PATH if not already present
+if [[ ":$PATH:" != *":$NJOY_PATH:"* ]]; then
+    export PATH="$NJOY_PATH:$PATH"
+    echo "PATH updated."
+else
+    echo "PATH already contains njoy path — skipping."
 fi
