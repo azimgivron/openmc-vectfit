@@ -249,7 +249,7 @@ else
     echo "openmc already installed — skipping build."
 fi
 
-if [ ! -f "/usr/local/bin/njoy" ]; then
+if [ ! -d "/njoy" ]; then
     if [ ! -d "NJOY2016" ]; then
         echo "Cloning njoy..."
         git clone https://github.com/njoy/NJOY2016.git
@@ -259,11 +259,9 @@ if [ ! -f "/usr/local/bin/njoy" ]; then
     echo "=== Building and installing njoy ==="
     cd NJOY2016
     git checkout 2016.60
-    mkdir build && cd build
-    cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
-    make -j 30
-    make install
-    cd ../..
+    cmake -B /njoy -S .
+    cmake --build /njoy -j 30
+    cd ..
     echo "njoy installed successfully."
     rm -rf NJOY2016
 else
