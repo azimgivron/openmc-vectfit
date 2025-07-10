@@ -8,13 +8,11 @@ FROM python:3.9-bookworm
 ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1\
-    # define an initial empty value so the next ENV line may append safely
-    LD_LIBRARY_PATH=""
-
-# OpenSSL paths added once install_vectfit.sh has finished
-ENV LD_LIBRARY_PATH="/usr/local/openssl-1.1.1h/lib:${LD_LIBRARY_PATH}" \
-    PATH="/usr/local/openssl-1.1.1h/bin:${PATH}"
+    PYTHONUNBUFFERED=1 \
+    LD_LIBRARY_PATH="/usr/local/openssl-1.1.1h/lib" \
+    OPENSSL_BIN_PATH="/usr/local/openssl-1.1.1h/bin" \
+    NJOY_PATH="/njoy" \
+    PATH="/opt/build/.venv/bin:/njoy:/usr/local/openssl-1.1.1h/bin:${PATH}"
 
 # Workspace for build artefacts
 WORKDIR /opt/build
